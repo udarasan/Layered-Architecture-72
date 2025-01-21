@@ -1,12 +1,8 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.bo.CustomerBOImpl;
-import com.example.layeredarchitecture.bo.ItemBOImpl;
-import com.example.layeredarchitecture.bo.PlaceOrderBOImpl;
-import com.example.layeredarchitecture.bo.custom.CustomerBO;
-import com.example.layeredarchitecture.bo.custom.ItemBO;
+import com.example.layeredarchitecture.bo.BOFactory;
+import com.example.layeredarchitecture.bo.custom.impl.PlaceOrderBOImpl;
 import com.example.layeredarchitecture.bo.custom.PlaceOrderBO;
-import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -56,7 +52,7 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
-
+    PlaceOrderBO placeOrderBO= (PlaceOrderBO) BOFactory.getInstance().getBO(BOFactory.BOType.PLACE_ORDER);
     public void initialize() throws SQLException, ClassNotFoundException {
 
         tblOrderDetails.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -107,7 +103,7 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+
                         CustomerDTO customerDTO=placeOrderBO.searchCustomer(newValue+"");
 
                         txtCustomerName.setText(customerDTO.getName());
@@ -185,18 +181,15 @@ public class PlaceOrderFormController {
     }
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemBO itemBO=new ItemBOImpl();
-        return itemBO.exitItem(code);
+        return placeOrderBO.existItem(code);
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
         return placeOrderBO.existCustomer(id);
     }
 
     public String generateNewOrderId() {
         try {
-            PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
             return placeOrderBO.generateNewOrderId();
             } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new order id").show();
@@ -208,7 +201,6 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
             ArrayList<CustomerDTO> list=placeOrderBO.getAllCustomerIds();
             for (CustomerDTO customerDTO:list) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
@@ -223,7 +215,6 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
             ArrayList<ItemDTO> list=placeOrderBO.getAllItemIds();
             for (ItemDTO itemDTO:list) {
                 cmbCustomerId.getItems().add(itemDTO.getCode());
@@ -321,7 +312,6 @@ public class PlaceOrderFormController {
     }
 
     public boolean saveOrder(String orderId, LocalDate orderDate, String customerId, List<OrderDetailDTO> orderDetails) {
-        PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
         try {
             placeOrderBO.saveOrder(orderId,orderDate,customerId,orderDetails);
             return true;
