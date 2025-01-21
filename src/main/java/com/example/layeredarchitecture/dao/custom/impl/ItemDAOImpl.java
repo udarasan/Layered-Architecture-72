@@ -3,20 +3,21 @@ package com.example.layeredarchitecture.dao.custom.impl;
 import com.example.layeredarchitecture.dao.custom.ItemDAO;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.dto.ItemDTO;
+import com.example.layeredarchitecture.entity.Item;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class ItemDAOImpl implements ItemDAO {
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Item> getAll() throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         Statement stm = connection.createStatement();
         ResultSet rst = stm.executeQuery("SELECT * FROM Item");
 
-        ArrayList<ItemDTO> items = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
         while (rst.next()) {
-            ItemDTO item = new ItemDTO();
+            Item item = new Item();
             item.setCode(rst.getString("code"));
             item.setDescription(rst.getString("description"));
             item.setUnitPrice(rst.getBigDecimal("unitPrice"));
@@ -28,7 +29,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public void save(ItemDTO item) throws SQLException, ClassNotFoundException {
+    public void save(Item item) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
         pstm.setString(1, item.getCode());
@@ -39,7 +40,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public void update(ItemDTO itemDTO) throws SQLException,ClassNotFoundException{
+    public void update(Item itemDTO) throws SQLException,ClassNotFoundException{
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement("UPDATE Item SET description=?, unitPrice=?, qtyOnHand=? WHERE code=?");
         pstm.setString(1, itemDTO.getDescription());
@@ -57,7 +58,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public ItemDTO search(String code) throws SQLException, ClassNotFoundException {
+    public Item search(String code) throws SQLException, ClassNotFoundException {
         return null;
     }
     @Override

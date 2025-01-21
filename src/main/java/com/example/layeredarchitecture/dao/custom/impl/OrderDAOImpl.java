@@ -3,6 +3,7 @@ package com.example.layeredarchitecture.dao.custom.impl;
 import com.example.layeredarchitecture.dao.custom.OrderDAO;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.dto.OrderDTO;
+import com.example.layeredarchitecture.entity.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,17 +20,17 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public ArrayList<OrderDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<Order> getAll() throws SQLException, ClassNotFoundException {
         return null;
     }
 
     @Override
-    public void save(OrderDTO dto) throws SQLException, ClassNotFoundException {
+    public void save(Order entity) throws SQLException, ClassNotFoundException {
 
     }
 
     @Override
-    public void update(OrderDTO dto) throws SQLException, ClassNotFoundException {
+    public void update(Order entity) throws SQLException, ClassNotFoundException {
 
     }
 
@@ -49,7 +50,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public OrderDTO search(String id) throws SQLException, ClassNotFoundException {
+    public Order search(String id) throws SQLException, ClassNotFoundException {
         return null;
     }
 }
