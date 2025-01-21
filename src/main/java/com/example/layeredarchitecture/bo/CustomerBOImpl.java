@@ -1,34 +1,35 @@
 package com.example.layeredarchitecture.bo;
 
+import com.example.layeredarchitecture.bo.custom.CustomerBO;
 import com.example.layeredarchitecture.dao.custom.impl.CustomerDAOImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerBOImpl {
+public class CustomerBOImpl implements CustomerBO {
     CustomerDAOImpl customerDAO = new CustomerDAOImpl();
     @Override
-    public ArrayList<CustomerDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
         return customerDAO.getAll();
     }
 
     @Override
-    public void save(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public void saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
         customerDAO.save(customerDTO);
     }
 
     @Override
-    public void update(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
+    public void updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
     customerDAO.update(customerDTO);
     }
 
-    public void delete(String id) throws SQLException, ClassNotFoundException {
+    public void deleteCustomer(String id) throws SQLException, ClassNotFoundException {
         customerDAO.delete(id);
     }
 
     @Override
-    public boolean exit(String id) throws SQLException, ClassNotFoundException {
+    public boolean exitCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.exit(id);
     }
 
@@ -38,7 +39,7 @@ public class CustomerBOImpl {
     }
 
     @Override
-    public CustomerDTO search(String id) throws SQLException, ClassNotFoundException {
+    public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
         return customerDAO.search(id);
     }
 }

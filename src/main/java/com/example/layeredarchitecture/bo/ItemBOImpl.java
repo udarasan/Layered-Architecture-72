@@ -9,18 +9,18 @@ import java.util.ArrayList;
 public class ItemBOImpl {
     ItemDAOImpl itemDAO = new ItemDAOImpl();
     @Override
-    public ArrayList<ItemDTO> getAll() throws SQLException, ClassNotFoundException {
+    public ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException {
         return itemDAO.getAll();
     }
 
 
     @Override
-    public void save(ItemDTO item) throws SQLException, ClassNotFoundException {
+    public void saveItem(ItemDTO item) throws SQLException, ClassNotFoundException {
         itemDAO.save(item);
     }
 
     @Override
-    public void update(ItemDTO itemDTO) throws SQLException,ClassNotFoundException{
+    public void updateItem(ItemDTO itemDTO) throws SQLException,ClassNotFoundException{
         itemDAO.update(itemDTO);
 
     }
@@ -29,11 +29,11 @@ public class ItemBOImpl {
     }
 
     @Override
-    public ItemDTO search(String code) throws SQLException, ClassNotFoundException {
+    public ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException {
         return null;
     }
     @Override
-    public boolean exit(String code) throws SQLException, ClassNotFoundException {
+    public boolean exitItem(String code) throws SQLException, ClassNotFoundException {
         return itemDAO.exit(code);
     }
     @Override
