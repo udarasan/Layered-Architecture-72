@@ -26,12 +26,12 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public void saveCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-        customerDAO.save(customerDTO);
+        customerDAO.save(new Customer(customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress()));
     }
 
     @Override
     public void updateCustomer(CustomerDTO customerDTO) throws SQLException, ClassNotFoundException {
-    customerDAO.update(customerDTO);
+    customerDAO.update(new Customer(customerDTO.getId(),customerDTO.getName(),customerDTO.getAddress()));
     }
 
     public void deleteCustomer(String id) throws SQLException, ClassNotFoundException {
@@ -50,6 +50,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException, ClassNotFoundException {
-        return customerDAO.search(id);
+        Customer customer= customerDAO.search(id);
+        return new CustomerDTO(customer.getId(),customer.getName(),customer.getAddress());
     }
 }
