@@ -9,7 +9,7 @@ public interface ItemBO {
     ArrayList<ItemDTO> getAllItems() throws SQLException, ClassNotFoundException;
     void saveItem(ItemDTO item) throws SQLException, ClassNotFoundException;
     void updateItem(ItemDTO itemDTO) throws SQLException,ClassNotFoundException;
-    void delete(String code) throws SQLException, ClassNotFoundException;
+    void deleteItem(String code) throws SQLException, ClassNotFoundException;
     ItemDTO searchItem(String code) throws SQLException, ClassNotFoundException;
     boolean exitItem(String code) throws SQLException, ClassNotFoundException;
     String generateNewID() throws SQLException, ClassNotFoundException;

@@ -1,5 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.bo.ItemBOImpl;
+import com.example.layeredarchitecture.bo.custom.ItemBO;
 import com.example.layeredarchitecture.dao.custom.impl.ItemDAOImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
@@ -70,7 +72,8 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
             /*Get all items*/
-            ArrayList<ItemDTO> itemDTOS = new ItemDAOImpl().getAllItems();
+            ItemBO itemBO=new ItemBOImpl();
+            ArrayList<ItemDTO> itemDTOS = itemBO.getAllItems();
             for (ItemDTO itemDTO : itemDTOS) {
                 tblItems.getItems().add(new ItemTM(itemDTO.getCode(),itemDTO.getDescription(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand()));
             }
@@ -129,8 +132,8 @@ public class ManageItemsFormController {
             if (!existItem(code)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
-            ItemDAOImpl itemDAO=new ItemDAOImpl();
-            itemDAO.deleteItem(code);
+           ItemBO itemBO=new ItemBOImpl();
+            itemBO.deleteItem(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
             tblItems.getSelectionModel().clearSelection();
@@ -170,8 +173,8 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, code + " already exists").show();
                 }
                 //Save Item
-                ItemDAOImpl itemDAO=new ItemDAOImpl();
-                itemDAO.saveItems(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                ItemBO itemBO=new ItemBOImpl();
+                itemBO.saveItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
                 tblItems.getItems().add(new ItemTM(code, description, unitPrice, qtyOnHand));
 
             } catch (SQLException e) {
@@ -185,8 +188,8 @@ public class ManageItemsFormController {
                 if (!existItem(code)) {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
-                ItemDAOImpl itemDAO =new ItemDAOImpl();
-                itemDAO.updateItems(new ItemDTO(code,description,unitPrice,qtyOnHand));
+                ItemBO itemBO=new ItemBOImpl();
+                itemBO.updateItem(new ItemDTO(code,description,unitPrice,qtyOnHand));
                 /*Update Item*/
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -206,15 +209,15 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-        ItemDAOImpl itemDAO=new ItemDAOImpl();
-        return itemDAO.existItem(code);
+        ItemBO itemBO=new ItemBOImpl();
+        return itemBO.exitItem(code);
     }
 
 
     private String generateNewId() {
         try {
-            ItemDAOImpl itemDAO=new ItemDAOImpl();
-            return itemDAO.generateNewId();
+            ItemBO itemBO=new ItemBOImpl();
+            return itemBO.generateNewID();
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {

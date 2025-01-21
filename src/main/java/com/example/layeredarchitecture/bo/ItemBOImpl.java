@@ -25,7 +25,7 @@ public class ItemBOImpl implements ItemBO {
         itemDAO.update(itemDTO);
 
     }
-    public void delete(String code) throws SQLException, ClassNotFoundException {
+    public void deleteItem(String code) throws SQLException, ClassNotFoundException {
         itemDAO.delete(code);
     }
 
