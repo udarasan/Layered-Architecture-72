@@ -107,8 +107,8 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        CustomerBO customerBO=new CustomerBOImpl();
-                        CustomerDTO customerDTO=customerBO.searchCustomer(newValue+"");
+                        PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+                        CustomerDTO customerDTO=placeOrderBO.searchCustomer(newValue+"");
 
                         txtCustomerName.setText(customerDTO.getName());
                     } catch (SQLException e) {
@@ -190,8 +190,8 @@ public class PlaceOrderFormController {
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        CustomerBO customerBO=new CustomerBOImpl();
-        return customerBO.exitCustomer(id);
+        PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+        return placeOrderBO.existCustomer(id);
     }
 
     public String generateNewOrderId() {
@@ -208,8 +208,8 @@ public class PlaceOrderFormController {
 
     private void loadAllCustomerIds() {
         try {
-            CustomerBO customerBO=new CustomerBOImpl();
-            ArrayList<CustomerDTO> list=customerBO.getAllCustomer();
+            PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+            ArrayList<CustomerDTO> list=placeOrderBO.getAllCustomerIds();
             for (CustomerDTO customerDTO:list) {
                 cmbCustomerId.getItems().add(customerDTO.getId());
             }
@@ -223,8 +223,8 @@ public class PlaceOrderFormController {
     private void loadAllItemCodes() {
         try {
             /*Get all items*/
-            ItemBO itemBO=new ItemBOImpl();
-            ArrayList<ItemDTO> list=itemBO.getAllItems();
+            PlaceOrderBO placeOrderBO=new PlaceOrderBOImpl();
+            ArrayList<ItemDTO> list=placeOrderBO.getAllItemIds();
             for (ItemDTO itemDTO:list) {
                 cmbCustomerId.getItems().add(itemDTO.getCode());
             }
@@ -335,8 +335,8 @@ public class PlaceOrderFormController {
 
     public ItemDTO findItem(String code) {
         try {
-           ItemBO itemBO=new ItemBOImpl();
-           ItemDTO itemDTO=itemBO.searchItem(code);
+            PlaceOrderBO placeOrderBO = new PlaceOrderBOImpl();
+           ItemDTO itemDTO=placeOrderBO.searchItem(code);
             return new ItemDTO(itemDTO.getCode(),itemDTO.getDescription(),itemDTO.getUnitPrice(),itemDTO.getQtyOnHand());
         } catch (SQLException e) {
             throw new RuntimeException("Failed to find the Item " + code, e);
